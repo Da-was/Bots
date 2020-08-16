@@ -6,3 +6,4 @@ time.sleep(4)
 for word in f:
     pyautogui.typewrite(word)
     pyautogui.press('enter')
+print('terminei a braba')
