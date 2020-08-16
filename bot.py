@@ -1,5 +1,6 @@
 import pyautogui,time
-#aviso,santana e vanessa
+import textos
+#aviso,cirilo,pneu, santana e vanessa
 braba = input('qual vai ser a braba?')
 f = open(braba + '.txt','r')
 time.sleep(4)
