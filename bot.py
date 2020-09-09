@@ -1,23 +1,28 @@
 import pyautogui,time
 from PIL import ImageTk, Image
 from tkinter import*
+from tkinter import messagebox
 
 root = Tk()
 root.title("Spaming bot")
 
 #-------------------------------functions------------------------------
 def init_spam():
+    try:
+        braba = str(Select.get())
+        Select.delete(0,END)
 
-    braba = Select.get()
-    Select.delete(0,END)
+        f = open('textos/'+braba + '.txt','r')
+        print(braba)
+        time.sleep(4)
+        for word in f:
+            pyautogui.typewrite(word)
+            pyautogui.press('enter')
+        print('terminei a braba')
+        
+    except FileNotFoundError:
+        messagebox.showerror("Erro","Não foi possivel encontrar o arquivo \"" + braba + "\"!" )
 
-    f = open('textos/'+braba + '.txt','r')
-    print(braba)
-    time.sleep(4)
-    for word in f:
-        pyautogui.typewrite(word)
-        pyautogui.press('enter')
-    print('terminei a braba')
 #-------------------------------Create side----------------------------
 
 Frame = LabelFrame(root, text= "Como usar:", padx = 5, pady = 5 )
@@ -58,5 +63,7 @@ status.grid(row = 0 , column = 0)
 Frame.grid(row =0 , column = 0, padx = 10, pady = 10, sticky = W+E)
 Frame2.grid(row =1 , column = 0, padx = 10, pady = 10, sticky = W+E)
 Frame3.grid(row =2 , column = 0, padx = 10, pady = 10, sticky = W+E)
+
+
 
 root.mainloop()
