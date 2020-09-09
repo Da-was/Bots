@@ -45,8 +45,7 @@ def stop_spam():
     global pode_spam 
     pode_spam = False 
 
-    spam_t1._stop()
-    spam_t2._stop()
+    
 
 def first_spam():
 
