@@ -1,4 +1,4 @@
-import pyautogui,time
+import pyautogui,time, threading
 from PIL import ImageTk, Image
 from tkinter import*
 from tkinter import messagebox
@@ -8,20 +8,66 @@ root.title("Spaming bot")
 
 #-------------------------------functions------------------------------
 def init_spam():
+
+    global pode_spam 
+
+    pode_spam = True
+
     try:
         braba = str(Select.get())
         Select.delete(0,END)
 
         f = open('textos/'+braba + '.txt','r')
         print(braba)
+
         time.sleep(4)
+
         for word in f:
-            pyautogui.typewrite(word)
-            pyautogui.press('enter')
+            if pode_spam == True:
+
+                pyautogui.typewrite(word)
+                pyautogui.press('enter')
+            else :
+                break
+
         print('terminei a braba')
+        
+        f.close()
         
     except FileNotFoundError:
         messagebox.showerror("Erro","Não foi possivel encontrar o arquivo \"" + braba + "\"!" )
+
+    #spam_t1._stop()
+
+
+def stop_spam():
+
+    global pode_spam 
+    pode_spam = False 
+
+    spam_t1._stop()
+    spam_t2._stop()
+
+def first_spam():
+
+    global firtsSpam 
+    firtsSpam = True
+
+    if firtsSpam == True:
+
+        spam_t1.start()
+        firtsSpam = False
+        
+
+    else:
+
+        spam_t1.run()
+        
+    spam_t1._stop()
+    
+#-------------------------------threads--------------------------------
+spam_t1 = threading.Thread(target= init_spam)
+spam_t2 = threading.Thread(target= stop_spam)
 
 #-------------------------------Create side----------------------------
 
@@ -43,8 +89,8 @@ Select_text= Label(Frame2,text = "Insira o nome do arquivo de texto que você de
 Select = Entry(Frame2)
 
 
-Button_init = Button(Frame2, text = "Iniciar", fg = "red", padx = 30 ,command = init_spam)
-button_quit = Button(Frame2, text= "Abortar", padx = 30 , command = root.quit, fg = "red")
+Button_init = Button(Frame2, text = "Iniciar", fg = "red", padx = 30 ,command = first_spam)
+button_quit = Button(Frame2, text= "Abortar", padx = 30 , command = spam_t2.run, fg = "red")
 
 status = Label(Frame3, text= "Criado por: João Laurindo", )
 
