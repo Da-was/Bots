@@ -3,8 +3,13 @@ from PIL import ImageTk, Image
 from tkinter import*
 from tkinter import messagebox
 
+
+global firtsSpam 
+firtSpam = True
+
 root = Tk()
 root.title("Spaming bot")
+
 
 #-------------------------------functions------------------------------
 def init_spam():
@@ -47,26 +52,20 @@ def stop_spam():
 
     
 
+    
+
 def first_spam():
-
-    global firtsSpam 
-    firtsSpam = True
-
-    if firtsSpam == True:
-
-        spam_t1.start()
-        firtsSpam = False
+    
+    spam_t1 = threading.Thread(target= init_spam)
+    spam_t1.start()
+    
         
 
-    else:
-
-        spam_t1.run()
-        
-    spam_t1._stop()
+    
     
 #-------------------------------threads--------------------------------
-spam_t1 = threading.Thread(target= init_spam)
-spam_t2 = threading.Thread(target= stop_spam)
+
+
 
 #-------------------------------Create side----------------------------
 
@@ -89,7 +88,7 @@ Select = Entry(Frame2)
 
 
 Button_init = Button(Frame2, text = "Iniciar", fg = "red", padx = 30 ,command = first_spam)
-button_quit = Button(Frame2, text= "Abortar", padx = 30 , command = spam_t2.run, fg = "red")
+button_quit = Button(Frame2, text= "Abortar", padx = 30 , command = stop_spam, fg = "red")
 
 status = Label(Frame3, text= "Criado por: João Laurindo", )
 
